@@ -4,13 +4,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
     CardView startersCard;
     CardView mainsCard;
+    TextView emailAddressText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,10 +41,22 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(mainCoursesActivityIntent);
             }
         });
+
+        this.emailAddressText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent launchEmailIntent = new Intent(Intent.ACTION_SENDTO);
+                System.out.println("mailto:"+emailAddressText.getText().toString());
+                launchEmailIntent.setData(Uri.parse("mailto:"+emailAddressText.getText().toString()));
+
+                startActivity(launchEmailIntent);
+            }
+        });
     }
 
     private void findElements() {
         this.startersCard = findViewById(R.id.card_view_starters);
         this.mainsCard = findViewById(R.id.card_view_mains);
+        this.emailAddressText = findViewById(R.id.text_view_email_address);
     }
 }
